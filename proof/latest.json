@@ -1,0 +1,14 @@
+{
+  "network": "Shannon",
+  "chainId": 50312,
+  "marketId": "0x000000000000000000000000000000000000000000000000000000000001a5dc",
+  "pool": "0x1491b0369831ece5fa28fc3fdabd561f29315d4f",
+  "campaignId": "1001",
+  "campaignSlug": "crypto-brief",
+  "txHash": "0xf963e78106461c5184811c49f6a2bb8abb748ace11c51b194c85ace4492a211a",
+  "blockNumber": "485731720",
+  "builderCap": "0",
+  "builderCapBps": 0,
+  "builderFeeEvent": false,
+  "verifiedAt": "2026-09-11T17:07:18.506Z"
+}

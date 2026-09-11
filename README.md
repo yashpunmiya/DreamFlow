@@ -10,6 +10,7 @@ DreamFlow attributes real Event Contract orders to the channel that generated th
 
 - **Live Demo:** (Deploy URL pending)
 - **Proof Transaction:** [`0xf963e78106461c5184811c49f6a2bb8abb748ace11c51b194c85ace4492a211a`](https://shannon-explorer.somnia.network/tx/0xf963e78106461c5184811c49f6a2bb8abb748ace11c51b194c85ace4492a211a) (Block 485731720)
+- **Developer Feedback & Bug Report:** [FEEDBACK.md](file:///c:/Users/yyash/Coding/DreamFlow/FEEDBACK.md)
 - **Protocol Mode:** Mode B (Attribution Active, Live Pool Builder Cap: 0 bps)
 - **Network:** Somnia Shannon testnet (50312)
 - **Hackathon:** Somnia × DreamDEX Event Contracts

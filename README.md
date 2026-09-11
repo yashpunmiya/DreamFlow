@@ -8,16 +8,6 @@ DreamFlow attributes real DreamDEX Event Contract orders to the acquisition chan
 
 ---
 
-## Live
-
-- **App:** `ADD_DEPLOYED_URL`
-- **Demo Video:** `ADD_VIDEO_URL`
-- **GitHub:** `ADD_GITHUB_URL`
-- **Network:** Somnia Shannon Testnet — Chain ID `50312`
-- **Proof Transaction:** `ADD_PROOF_TX`
-
----
-
 ## What is DreamFlow?
 
 DreamDEX builders can create:

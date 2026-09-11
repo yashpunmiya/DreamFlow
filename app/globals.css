@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #07090b;
+  --foreground: #f8fafc;
+  --brand-primary: #1e7f60;
+  --brand-mint: #2eb88a;
+  --brand-emerald: #34d399;
 }
 
 @theme inline {
@@ -12,15 +15,61 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  background: #07090b;
+  color: #f8fafc;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom glowing effects & glassmorphism */
+.glass-panel {
+  background: rgba(13, 17, 21, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-emerald {
+  background: linear-gradient(135deg, rgba(20, 87, 65, 0.12) 0%, rgba(13, 17, 21, 0.7) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(46, 184, 138, 0.25);
+  box-shadow: 0 10px 30px -10px rgba(30, 127, 96, 0.15);
+}
+
+.brand-glow {
+  box-shadow: 0 0 35px -5px rgba(46, 184, 138, 0.25);
+}
+
+.brand-glow-sm {
+  box-shadow: 0 0 15px -2px rgba(46, 184, 138, 0.2);
+}
+
+/* Subtle background grid pattern */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2.5s infinite;
+}
+
+/* Pulse glow */
+@keyframes brandPulse {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.03); }
+}
+
+.animate-brand-pulse {
+  animation: brandPulse 3s ease-in-out infinite;
 }

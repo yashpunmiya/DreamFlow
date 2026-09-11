@@ -12,8 +12,13 @@ import {
   ShieldCheck,
   Zap,
   ArrowUpRight,
+  Database,
+  Layers,
+  Sparkles,
+  Hash,
 } from "lucide-react";
 import { createPublicClient, http, isHex } from "viem";
+import { BrandLogo } from "@/components/BrandLogo";
 import { NetworkBadge } from "@/components/NetworkBadge";
 import { shannon } from "@/lib/wallet/chain";
 import {
@@ -89,26 +94,32 @@ function VerifyContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 selection:bg-cyan-500/20">
+    <div className="min-h-screen bg-[#07090b] text-slate-100 relative selection:bg-[#1E7F60]/30 selection:text-emerald-300">
+      {/* Ambient background glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[850px] h-[340px] bg-[#1E7F60]/10 blur-[130px] pointer-events-none -z-10" />
+
       {/* Header */}
-      <header className="border-b border-slate-800/80 bg-slate-950/40 backdrop-blur-md sticky top-0 z-40">
+      <header className="border-b border-slate-800/80 bg-[#07090b]/80 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link
             href="/"
-            className="flex items-center gap-2.5 text-slate-400 hover:text-cyan-400 transition-colors"
+            className="group flex items-center gap-3 transition-transform hover:opacity-90"
           >
-            <ArrowLeft size={18} />
-            <span className="font-semibold tracking-tight text-slate-200">
-              DreamFlow
-            </span>
+            <BrandLogo size="md" />
           </Link>
           <div className="flex items-center gap-3">
             <NetworkBadge />
             <Link
               href="/dashboard"
-              className="text-xs font-medium text-slate-400 hover:text-slate-200 px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/60 transition-colors"
+              className="text-xs font-semibold text-slate-300 hover:text-white px-3.5 py-1.5 rounded-xl border border-slate-800 bg-slate-900/60 hover:border-slate-700 transition-colors"
             >
               Dashboard
+            </Link>
+            <Link
+              href="/trade"
+              className="text-xs font-semibold px-3.5 py-1.5 bg-gradient-to-r from-[#1E7F60] to-[#2EB88A] hover:brightness-110 text-white rounded-xl shadow-lg shadow-[#1E7F60]/20 transition-all"
+            >
+              Live Trade
             </Link>
           </div>
         </div>
@@ -116,64 +127,64 @@ function VerifyContent() {
 
       <div className="max-w-3xl mx-auto px-6 py-12">
         <div className="mb-8">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-xs font-bold tracking-wider text-cyan-400 uppercase">
-              Independent Verification
-            </span>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/25">
-              RAW LOGS DECODER
-            </span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[#1E7F60]/15 text-[#2EB88A] border border-[#1E7F60]/30 mb-4">
+            <ShieldCheck size={14} />
+            RAW LOGS CRYPTOGRAPHIC VERIFIER
           </div>
-          <h1 className="text-3xl font-extrabold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
             Verify On-Chain Attribution
           </h1>
-          <p className="text-sm text-slate-400 mt-2 leading-relaxed">
-            Verify DreamFlow campaign attribution from any Shannon transaction hash.
-            This decodes the raw receipt from scratch using Somnia ABIs — proving attribution
+          <p className="text-sm text-slate-400 mt-2.5 leading-relaxed">
+            Verify DreamFlow campaign attribution from any Somnia Shannon transaction hash.
+            This decodes the raw receipt from scratch using Somnia ABIs — cryptographically proving attribution
             exists directly on the blockchain without relying on any centralized server.
           </p>
         </div>
 
         {/* Input & 1-Click Proof */}
-        <div className="bg-slate-900/70 border border-slate-800/90 rounded-2xl p-6 shadow-xl mb-6">
-          <label className="block text-xs font-semibold text-slate-300 mb-2">
+        <div className="glass-panel p-6 shadow-xl mb-6 border-slate-800/90">
+          <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2.5 flex items-center gap-2">
+            <Hash size={14} className="text-[#2EB88A]" />
             Somnia Shannon Transaction Hash
           </label>
-          <div className="flex gap-2.5 mb-3">
+          <div className="flex flex-col sm:flex-row gap-2.5 mb-3">
             <input
               type="text"
               value={txHash}
               onChange={(e) => setTxHash(e.target.value)}
               placeholder="0x..."
-              className="flex-1 px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl font-mono text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500"
+              className="flex-1 px-4 py-3 bg-[#0a0d12] border border-slate-800 rounded-xl font-mono text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-[#1E7F60] focus:ring-1 focus:ring-[#1E7F60] transition-all"
             />
             <button
               onClick={() => verifyTransaction()}
               disabled={loading || !txHash}
-              className="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 text-slate-950 rounded-xl font-bold text-xs transition-all shadow-lg shadow-cyan-500/20 flex items-center gap-2"
+              className="px-6 py-3 bg-gradient-to-r from-[#1E7F60] to-[#2EB88A] hover:brightness-110 disabled:opacity-50 text-white rounded-xl font-bold text-xs transition-all shadow-lg shadow-[#1E7F60]/25 flex items-center justify-center gap-2"
             >
               {loading ? (
-                <span>Decoding...</span>
+                <>
+                  <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span>Decoding...</span>
+                </>
               ) : (
                 <>
                   <Search size={15} />
-                  <span>Verify</span>
+                  <span>Verify Hash</span>
                 </>
               )}
             </button>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800/60 text-xs">
-            <span className="text-slate-500">Need a test hash?</span>
+          <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-slate-800/60 text-xs">
+            <span className="text-slate-500">Looking for a verified proof on Shannon?</span>
             <button
               type="button"
               onClick={() => {
                 setTxHash(DEFAULT_PROOF_TX);
                 verifyTransaction(DEFAULT_PROOF_TX);
               }}
-              className="text-cyan-400 hover:text-cyan-300 flex items-center gap-1 font-medium underline underline-offset-4"
+              className="text-[#2EB88A] hover:text-[#38e2aa] flex items-center gap-1.5 font-semibold transition-colors"
             >
-              <Zap size={13} />
+              <Zap size={14} className="animate-pulse" />
               1-Click Load Protocol Proof Transaction
             </button>
           </div>
@@ -181,7 +192,7 @@ function VerifyContent() {
 
         {/* Verification Result */}
         {result && (
-          <div className="bg-slate-900/80 border border-slate-800/90 rounded-2xl p-6 shadow-2xl space-y-6">
+          <div className="glass-panel p-6 shadow-2xl space-y-6 border-slate-800/90 animate-fadeIn">
             {result.verified ? (
               <>
                 <div className="flex items-center gap-3.5 pb-5 border-b border-slate-800">
@@ -200,22 +211,22 @@ function VerifyContent() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                   <div className="space-y-3">
-                    <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800/80">
-                      <span className="text-slate-500 block text-[11px] mb-0.5">Attributed Campaign</span>
+                    <div className="p-3.5 bg-[#0a0d12] rounded-xl border border-slate-800/80">
+                      <span className="text-slate-500 block text-[11px] mb-1 font-medium">Attributed Campaign</span>
                       <span className="font-bold text-slate-100 text-sm">
                         {result.campaign?.label || "Known Channel"}
                       </span>
                     </div>
 
-                    <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800/80">
-                      <span className="text-slate-500 block text-[11px] mb-0.5">Campaign ID (userData)</span>
-                      <span className="font-mono font-bold text-cyan-300 text-sm">
+                    <div className="p-3.5 bg-[#0a0d12] rounded-xl border border-slate-800/80">
+                      <span className="text-slate-500 block text-[11px] mb-1 font-medium">Campaign ID (userData)</span>
+                      <span className="font-mono font-bold text-[#2EB88A] text-sm">
                         {result.orderPlaced?.userData.toString()}
                       </span>
                     </div>
 
-                    <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800/80">
-                      <span className="text-slate-500 block text-[11px] mb-0.5">Order Direction (isBid)</span>
+                    <div className="p-3.5 bg-[#0a0d12] rounded-xl border border-slate-800/80">
+                      <span className="text-slate-500 block text-[11px] mb-1 font-medium">Order Direction (isBid)</span>
                       <span className="font-semibold text-slate-200">
                         {result.orderPlaced?.isBid ? "BUY_YES (UP)" : "BUY_NO (DOWN)"}
                       </span>
@@ -223,22 +234,22 @@ function VerifyContent() {
                   </div>
 
                   <div className="space-y-3">
-                    <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800/80">
-                      <span className="text-slate-500 block text-[11px] mb-0.5">Order ID</span>
+                    <div className="p-3.5 bg-[#0a0d12] rounded-xl border border-slate-800/80">
+                      <span className="text-slate-500 block text-[11px] mb-1 font-medium">Order ID</span>
                       <span className="font-mono text-slate-300">
                         {result.orderPlaced?.orderId || "Mined on-chain"}
                       </span>
                     </div>
 
-                    <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800/80">
-                      <span className="text-slate-500 block text-[11px] mb-0.5">Full Quantity</span>
+                    <div className="p-3.5 bg-[#0a0d12] rounded-xl border border-slate-800/80">
+                      <span className="text-slate-500 block text-[11px] mb-1 font-medium">Full Quantity</span>
                       <span className="font-mono text-slate-300">
                         {result.orderPlaced?.fullQuantity.toString()} outcome lots
                       </span>
                     </div>
 
-                    <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800/80">
-                      <span className="text-slate-500 block text-[11px] mb-0.5">Order Owner</span>
+                    <div className="p-3.5 bg-[#0a0d12] rounded-xl border border-slate-800/80">
+                      <span className="text-slate-500 block text-[11px] mb-1 font-medium">Order Owner</span>
                       <span className="font-mono text-slate-300">
                         {truncateHash(result.orderPlaced?.owner || "", 12, 6)}
                       </span>
@@ -249,10 +260,10 @@ function VerifyContent() {
                 {receiptMeta && (
                   <div className="pt-4 border-t border-slate-800/80 flex flex-wrap items-center justify-between text-xs text-slate-400 gap-2">
                     <div>
-                      Block: <span className="font-mono text-slate-200">{receiptMeta.blockNumber.toString()}</span>
+                      Block: <span className="font-mono text-slate-200 font-semibold">{receiptMeta.blockNumber.toString()}</span>
                     </div>
                     <div>
-                      Gas Used: <span className="font-mono text-slate-200">{receiptMeta.gasUsed.toString()}</span>
+                      Gas Used: <span className="font-mono text-slate-200 font-semibold">{receiptMeta.gasUsed.toString()}</span>
                     </div>
                     <div>
                       Receipt Status: <span className="text-emerald-400 font-semibold uppercase">{receiptMeta.status}</span>
@@ -265,13 +276,13 @@ function VerifyContent() {
                     href={getExplorerUrl(txHash)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 py-3 px-4 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all shadow"
+                    className="flex-1 py-3 px-4 bg-gradient-to-r from-[#1E7F60] to-[#2EB88A] hover:brightness-110 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-lg shadow-[#1E7F60]/20"
                   >
                     View Raw Receipt on Shannon Explorer <ExternalLink size={14} />
                   </a>
                   <Link
                     href="/dashboard"
-                    className="py-3 px-5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition-all"
+                    className="py-3 px-5 bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition-all"
                   >
                     View Dashboard <ArrowUpRight size={14} />
                   </Link>
@@ -299,8 +310,11 @@ export default function VerifyPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#07090e] text-slate-100 flex items-center justify-center">
-          <div className="text-slate-400 text-sm">Loading DreamFlow Verifier...</div>
+        <div className="min-h-screen bg-[#07090b] text-slate-100 flex items-center justify-center">
+          <div className="text-slate-400 text-sm flex items-center gap-2">
+            <div className="w-4 h-4 border-2 border-[#1E7F60] border-t-white rounded-full animate-spin" />
+            Loading DreamFlow Verifier...
+          </div>
         </div>
       }
     >

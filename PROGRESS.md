@@ -7,48 +7,38 @@ Attribution-only (Mode B — builder cap is 0)
 - SDK: @somnia-chain/markets-sdk@0.30.0 installed (>=0.28 required) ✓
 - wallet: 0x732d5b8794eBF323B1CE036A64a89Af08E5dfBD7 (local dev/probe wallet, key in .env.local, gitignored)
 - STT: 50 STT (funded by human) ✓
-- tUSDC: not yet minted
-- live market: BTC 0x00000000000000...
-- marketId: 0x000000000000000000000000000000000000000000000000000000000001a5dc
-- pool: 0x1491b0369831ece5fa28fc3fdabd561f29315d4f
-- builder cap: 0 (0 bps) → Mode B (attribution-only)
-- attributed tx: 0xf963e78106461c5184811c49f6a2bb8abb748ace11c51b194c85ace4492a211a ✓
-- builder fee tx: pending
+- tUSDC: 100 tUSDC minted via faucet ✓
+- live market: BTC (0x000000000000000000000000000000000000000000000000000000000001a5dc) ✓
+- marketId: 0x000000000000000000000000000000000000000000000000000000000001a5dc ✓
+- pool: 0x1491b0369831ece5fa28fc3fdabd561f29315d4f ✓
+- builder cap: 0 (0 bps) → Mode B confirmed (attribution-only, honest protocol transparency) ✓
+- attributed tx: 0xf963e78106461c5184811c49f6a2bb8abb748ace11c51b194c85ace4492a211a (Block 485731720) ✓
+- orderId: 719423018874672610106 ✓
 
 ## Completed
-- Repo initialized, Next.js (TypeScript, App Router, Tailwind, ESLint) bootstrapped.
+- Repo initialized, Next.js 16 (TypeScript strict, App Router, Tailwind) bootstrapped.
 - package.json scripts wired: dev, build, lint, typecheck, test, probe, verify:tx.
-- .env.example created; .env* already gitignored.
 - Installed @somnia-chain/markets-sdk@0.30.0, viem@2.56.3, lucide-react, tsx, vitest.
 - lib/wallet/chain.ts: Shannon 50312 chain definition, tUSDC address/decimals.
 - lib/attribution/campaigns.ts: CryptoBrief/BossRaid/CreatorDemo campaign IDs + parsing helpers.
 - scripts/setup-test-wallet.ts + scripts/check-balance.ts: generated local probe wallet, confirmed 50 STT balance.
-- SDK surface fully inspected manually from installed source, documented in notes/SDK_SURFACE.md.
-- Key findings: userData available only via trader.placeOrder (not high-level exchange.createOrder), builder fields available at both levels, market status enum matches build.md assumptions.
-- lib/dreamdex/* modules: network.ts (addresses, explorer), markets.ts (discovery, helpers), abi.ts (contract ABIs, side mappings).
-- lib/attribution/storage.ts: VerifiedAttributionRecord type, localStorage persistence, aggregate metrics.
-- lib/attribution/decoder.ts: Receipt verification, OrderPlaced/OrderFilled/BuilderFeeCharged decoding.
-- lib/formatting/units.ts + tests: tUSDC formatting, builder fee conversion, hash truncation.
-- components/: NetworkBadge, Countdown, CampaignBadge.
-- app/page.tsx: Landing page with hero, flow diagram, value props.
-- app/trade/page.tsx: Trade page UI (wallet integration pending).
-- app/dashboard/page.tsx: Dashboard with metrics and verified orders table.
-- app/integrations/page.tsx: Campaign URLs, code examples, integration steps.
-- app/verify/page.tsx: Transaction hash verification from scratch.
-- HANDOFF.md: Comprehensive 400+ line handoff document for continuity.
-
-## Current blocker
-None. Ready to execute probe script.
-
-## Next
-- Run npm run probe to place first attributed order on Shannon.
-- Verify tx in explorer, confirm userData=1001 in OrderPlaced event.
-- Determine Mode A (builder cap > 0) or Mode B (builder cap = 0).
-- Add wallet integration to frontend (viem WalletClient or wagmi).
-- Wire up actual order placement from /trade page.
-- Deploy to Vercel.
-- Record demo video.
-- Write README, JUDGES, CLAIMS, SDK_FEEDBACK docs.
+- SDK surface inspected & documented in notes/SDK_SURFACE.md.
+- **Protocol Probe Executed:** Real Shannon transaction submitted and mined:
+  - Tx: `0xf963e78106461c5184811c49f6a2bb8abb748ace11c51b194c85ace4492a211a`
+  - OrderPlaced event decoded with `placedOrder.userData === 1001n`
+  - Proof preserved in `proof/latest.json`.
+- `scripts/verify-tx.ts`: CLI verifier for on-chain attribution testing (`npm run verify:tx`).
+- `lib/dreamdex/execution.ts`: Order execution helper for `placeBinaryOrder` and tUSDC faucet.
+- `app/trade/page.tsx`: Full interactive trade UI with dual wallet support (Instant Testnet Demo Wallet + MetaMask), live market countdown, campaign selector, and on-chain verification modal.
+- `app/api/trade/place-demo-order/route.ts`: Server-side execution route allowing 1-click testnet trading for judges without requiring wallet extensions.
+- `app/api/trade/faucet/route.ts`: Testnet token faucet integration.
+- `app/dashboard/page.tsx`: Real verified activity ledger showing on-chain attributed orders.
+- `app/verify/page.tsx`: Raw transaction receipt verifier with 1-click proof verification.
+- `app/integrations/page.tsx`: Campaign URLs, custom URL builder, and smart contract code examples.
+- `app/page.tsx`: Rich landing page with hero, flow diagram, and live proof badge.
+- `SDK_FEEDBACK.md`: Detailed documentation of genuine SDK findings (placeBinaryOrder vs placeOrder, GraphQL clobStatus column, wsRpcUrl requirement).
+- `CLAIMS.md`, `README.md`, `JUDGES.md`: All updated and aligned with actual verified on-chain reality.
+- `npm run typecheck`, `npm test`, `npm run build`: All passing with 0 errors.
 
 ## Known proof transactions
-(none yet)
+- `0xf963e78106461c5184811c49f6a2bb8abb748ace11c51b194c85ace4492a211a` (Shannon Testnet, Block 485731720, userData: 1001)
